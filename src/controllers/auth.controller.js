@@ -17,7 +17,7 @@ exports.signup = async (req, res, next) => {
   });
   delete user.password;
 
-  res.status(201);
+  res.status(200);
   return res.json({
     token: jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "7d" }),
     user
@@ -32,7 +32,8 @@ exports.signin = async (req, res, next) => {
   if (user) {
     if (await compare(password, user.password)) {
       delete user.password;
-
+      res.status(200);
+      
       return res.json({
         token: jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "7d" }),
         user
